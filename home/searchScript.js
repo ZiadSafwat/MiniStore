@@ -72,9 +72,9 @@ function renderSearchResults(searchData, query) {
   searchData.data.forEach(product => {
     const imageUrl = product.image && product.image.length > 0 
       ? generateImageUrl(apiUrl, 'products', product.productId, product.image[0])
-      : 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
+      : noImageUrl;
 
-    const hasDiscount = product.original_price && product.original_price > product.price;
+    const hasDiscount = false;//product.original_price && product.original_price > product.price;
     const discountPercentage = hasDiscount 
       ? Math.round(((product.original_price - product.price) / product.original_price) * 100)
       : 0;
@@ -83,9 +83,10 @@ function renderSearchResults(searchData, query) {
     productCard.className = 'product-card';
     productCard.innerHTML = `
       <div class="product-image" style="background-image: url('${imageUrl}');">
-        <div class="wishlist-icon ${product.is_wishlist ? 'active' : ''}">
-          <i class="fas fa-heart"></i>
-        </div>
+       
+        <button class="wishlist-btn ${product.is_wishlist ? "active" : ""}">
+        <i class="fas fa-heart"></i>
+    </button>
       </div>
       <div class="product-info">
         <h3 class="product-title">${product.title_en}</h3>
@@ -109,11 +110,34 @@ function renderSearchResults(searchData, query) {
     `;
 
     // Add wishlist functionality
-    const wishlistIcon = productCard.querySelector('.wishlist-icon');
-    wishlistIcon.addEventListener('click', (e) => {
+    const wishlistBtn = productCard.querySelector(".wishlist-btn");
+    wishlistBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      wishlistIcon.classList.toggle('active');
-      console.log('Toggle wishlist for product:', product.productId);
+
+      const isActive = wishlistBtn.classList.contains("active");
+      const icon = wishlistBtn.querySelector("i");
+      const originalClass = icon.className;
+      icon.className = "fas fa-spinner fa-spin";
+      wishlistBtn.disabled = true;
+      console.log(product.userWishListId, product.productId, !isActive, userId);
+      wishlistFunctionality(
+        product.userWishListId,
+        product.productId,
+        !isActive,
+        userId
+      )
+        .then(() =>
+          isActive
+            ? wishlistBtn.classList.remove("active")
+            : wishlistBtn.classList.add("active")
+        )
+        .finally(() => {
+          // Remove loading effect
+          wishlistBtn.disabled = false;
+          icon.className = originalClass;
+        });
+
+      console.log("Toggle wishlist for product:", product.productId);
     });
 
     resultsGrid.appendChild(productCard);

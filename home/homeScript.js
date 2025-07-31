@@ -149,9 +149,24 @@ function renderCategories(categories) {
     categoriesGrid.appendChild(categoryCard);
   });
 }
+function flattenCategories(data) {
+  const result = [];
+
+  function recurse(items) {
+    for (const item of items) {
+      result.push(item);
+      if (item.children && item.children.length > 0) {
+        recurse(item.children);
+      }
+    }
+  }
+
+  recurse(data);
+  return result;
+}
 
 // Render Section from API data
-function renderSection(sectionData, sectionId,userWishListId) {
+function renderSection(sectionData, sectionId, userWishListId) {
   const productsGrid = document.getElementById(sectionId);
 
   if (!productsGrid || !sectionData || sectionData.length === 0) {
@@ -169,7 +184,7 @@ function renderSection(sectionData, sectionId,userWishListId) {
             product.productId,
             product.image[0]
           )
-        : "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80";
+        : noImageUrl;
 
     const hasDiscount = false; //product.original_price && product.original_price > product.price;
     const discountPercentage = hasDiscount
@@ -192,9 +207,7 @@ function renderSection(sectionData, sectionId,userWishListId) {
       : '<div class="product-badge">For you 💝</div>'
   }
   <div class="product-image" style="background-image: url('${imageUrl}');">
-  <button class="wishlist-btn ${
-    product.is_wishlist ? "active" : ""
-  }">
+  <button class="wishlist-btn ${product.is_wishlist ? "active" : ""}">
           <i class="fas fa-heart"></i>
       </button>
 
@@ -239,15 +252,18 @@ function renderSection(sectionData, sectionId,userWishListId) {
     wishlistBtn.addEventListener("click", (e) => {
       e.stopPropagation();
 
-
-
-       const isActive = wishlistBtn.classList.contains("active");
+      const isActive = wishlistBtn.classList.contains("active");
       const icon = wishlistBtn.querySelector("i");
       const originalClass = icon.className;
       icon.className = "fas fa-spinner fa-spin";
       wishlistBtn.disabled = true;
-    console.log(userWishListId, product.productId, !isActive, userId);
-      wishlistFunctionality(userWishListId, product.productId, !isActive, userId)
+      console.log(userWishListId, product.productId, !isActive, userId);
+      wishlistFunctionality(
+        userWishListId,
+        product.productId,
+        !isActive,
+        userId
+      )
         .then(() =>
           isActive
             ? wishlistBtn.classList.remove("active")
@@ -258,44 +274,35 @@ function renderSection(sectionData, sectionId,userWishListId) {
           wishlistBtn.disabled = false;
           icon.className = originalClass;
         });
-   
-       console.log("Toggle wishlist for product:", product.productId);
+
+      console.log("Toggle wishlist for product:", product.productId);
     });
 
     productsGrid.appendChild(productCard);
   });
 }
-// // Wishlist toggle
-// const wishlistIcons = document.querySelectorAll(".wishlist-icon");
-
-// wishlistIcons.forEach((icon) => {
-//   icon.addEventListener("click", function () {
-//     const heartIcon = this.querySelector("i");
-
-//     if (heartIcon.classList.contains("fas")) {
-//       heartIcon.classList.replace("fas", "far");
-//     } else {
-//       heartIcon.classList.replace("far", "fas");
-//       this.style.animation = "pulse 0.5s";
-
-//       setTimeout(() => {
-//         this.style.animation = "";
-//       }, 500);
-//     }
-//   });
-// });
+ 
 async function initializeHomePage() {
   try {
     const homeData = await fetchHomeData();
     if (homeData && homeData.data) {
       renderBanners(homeData.data.banners);
-      renderCategories(homeData.data.categories);
-      renderSection(homeData.data.new_arrivals, "newArrivalsGrid",homeData.data.userWishListId);
+      renderCategories(flattenCategories(homeData.data.categories));
+      renderSection(
+        homeData.data.new_arrivals,
+        "newArrivalsGrid",
+        homeData.data.userWishListId
+      );
       renderSection(
         homeData.data.recommendations,
-        "recommendationsProductsGrid",homeData.data.userWishListId
+        "recommendationsProductsGrid",
+        homeData.data.userWishListId
       );
-      renderSection(homeData.data.trending_products, "trendingProductsGrid",homeData.data.userWishListId);
+      renderSection(
+        homeData.data.trending_products,
+        "trendingProductsGrid",
+        homeData.data.userWishListId
+      );
     }
   } catch (error) {
     console.error("Error initializing home page:", error);
