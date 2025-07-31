@@ -263,7 +263,7 @@ async function showProductDetail() {
     productDetailContainer.innerHTML = `
                     <div class="error">
                         <p>Failed to load product details. Please try again later.</p>
-                        <a href="home.html" class="btn btn-back">Back to Products</a>
+                        <a href="../home/home.html" class="btn btn-back">Back to Products</a>
                     </div>
                 `;
   }

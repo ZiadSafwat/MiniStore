@@ -151,7 +151,7 @@ function renderCategories(categories) {
 }
 
 // Render Section from API data
-function renderSection(sectionData, sectionId) {
+function renderSection(sectionData, sectionId,userWishListId) {
   const productsGrid = document.getElementById(sectionId);
 
   if (!productsGrid || !sectionData || sectionData.length === 0) {
@@ -181,6 +181,7 @@ function renderSection(sectionData, sectionId) {
 
     const productCard = document.createElement("div");
     productCard.className = "product-card";
+    console.log(product.is_wishlist);
     // Set FULL card HTML (including container div)
     productCard.innerHTML = `
   ${
@@ -191,9 +192,12 @@ function renderSection(sectionData, sectionId) {
       : '<div class="product-badge">For you 💝</div>'
   }
   <div class="product-image" style="background-image: url('${imageUrl}');">
-    <div class="wishlist-icon ${product.is_wishlist ? "active" : ""}">
-      <i class="fas fa-heart"></i>
-    </div>
+  <button class="wishlist-btn ${
+    product.is_wishlist ? "active" : ""
+  }">
+          <i class="fas fa-heart"></i>
+      </button>
+
   </div>
   <div class="product-info">
     <h3 class="product-title">${product.title_en}</h3>
@@ -231,29 +235,67 @@ function renderSection(sectionData, sectionId) {
 `;
 
     // Add wishlist functionality
-    const wishlistIcon = productCard.querySelector(".wishlist-icon");
-    wishlistIcon.addEventListener("click", (e) => {
+    const wishlistBtn = productCard.querySelector(".wishlist-btn");
+    wishlistBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      wishlistIcon.classList.toggle("active");
-      console.log("Toggle wishlist for product:", product.productId);
+
+
+
+       const isActive = wishlistBtn.classList.contains("active");
+      const icon = wishlistBtn.querySelector("i");
+      const originalClass = icon.className;
+      icon.className = "fas fa-spinner fa-spin";
+      wishlistBtn.disabled = true;
+    console.log(userWishListId, product.productId, !isActive, userId);
+      wishlistFunctionality(userWishListId, product.productId, !isActive, userId)
+        .then(() =>
+          isActive
+            ? wishlistBtn.classList.remove("active")
+            : wishlistBtn.classList.add("active")
+        )
+        .finally(() => {
+          // Remove loading effect
+          wishlistBtn.disabled = false;
+          icon.className = originalClass;
+        });
+   
+       console.log("Toggle wishlist for product:", product.productId);
     });
 
     productsGrid.appendChild(productCard);
   });
 }
+// // Wishlist toggle
+// const wishlistIcons = document.querySelectorAll(".wishlist-icon");
 
+// wishlistIcons.forEach((icon) => {
+//   icon.addEventListener("click", function () {
+//     const heartIcon = this.querySelector("i");
+
+//     if (heartIcon.classList.contains("fas")) {
+//       heartIcon.classList.replace("fas", "far");
+//     } else {
+//       heartIcon.classList.replace("far", "fas");
+//       this.style.animation = "pulse 0.5s";
+
+//       setTimeout(() => {
+//         this.style.animation = "";
+//       }, 500);
+//     }
+//   });
+// });
 async function initializeHomePage() {
   try {
     const homeData = await fetchHomeData();
     if (homeData && homeData.data) {
       renderBanners(homeData.data.banners);
       renderCategories(homeData.data.categories);
-      renderSection(homeData.data.new_arrivals, "newArrivalsGrid");
+      renderSection(homeData.data.new_arrivals, "newArrivalsGrid",homeData.data.userWishListId);
       renderSection(
         homeData.data.recommendations,
-        "recommendationsProductsGrid"
+        "recommendationsProductsGrid",homeData.data.userWishListId
       );
-      renderSection(homeData.data.trending_products, "trendingProductsGrid");
+      renderSection(homeData.data.trending_products, "trendingProductsGrid",homeData.data.userWishListId);
     }
   } catch (error) {
     console.error("Error initializing home page:", error);

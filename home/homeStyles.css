@@ -386,27 +386,42 @@ footer {
     position: relative;
 }
 
-.wishlist-icon {
+ 
+
+
+
+
+
+
+.wishlist-btn {
     position: absolute;
     top: 15px;
     right: 15px;
-    color: #e53e3e;
     font-size: 1.3rem;
-    background: rgba(255,255,255,0.8);
-    border-radius: 50%;
     width: 36px;
     height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
     z-index: 2;
-}
 
-.wishlist-icon.active {
-    color: #e53e3e;
-}
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    transition: all 0.3s ease;
+  }
+  
+  .wishlist-btn.active {
+    color: #e63946;
+  }
+  
+  .wishlist-btn:hover {
+    transform: scale(1.2);
+  }
+
+
 
 .product-badge {
     position: absolute;
@@ -641,4 +656,3 @@ footer {
 .fade-in {
     animation: fadeIn 0.5s ease forwards;
 }
-

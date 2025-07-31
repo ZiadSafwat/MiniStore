@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FashionHub - Premium Online Shopping</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../home/homeStyles.css" />
+    
+    <!-- Load scripts in order: common first, then specific functionality -->
+    <script src="../common/main.js"></script>
+    <script src="wishListScript.js"></script>
+  </head>
+  <body>
+    <!-- Header with Enhanced Search -->
+    <header>
+      <div class="logo">
+        <i class="fas fa-shopping-bag"></i>
+        <span>MiniStore</span>
+      </div>
+
+     
+
+     
+
+      <div class="header-icons">
+        <a href="../home/home.html" class="active">  <div class="icon-wrapper">
+             <i class="fa-solid fa-house"></i>
+          </div></a>
+        <a href="" class="active"> <div class="icon-wrapper">
+          <i class="far fa-user"></i>
+        </div></a>
+
+        <a href="../cart/cart.html" class="active"> <div class="icon-wrapper cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </div></a>
+      </div>
+    </header>
+
+    <div class="container" id ="container">
+       <!-- New Arrivals Section -->
+      <h2 class="section-title">
+        Your Favourits
+        <!-- <a href="#" class="view-all">View All</a> -->
+      </h2>
+      <div class="products-grid" id="Favourits">
+        <!-- New arrivals will be loaded dynamically from API -->
+      </div>
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 🛍️ MiniStore - Simple E-commerce Website</p>
+    </footer>
+  </body>
+</html>
+
