@@ -117,6 +117,8 @@ function renderBanners(banners) {
   resetBannerTimer();
 }
 
+
+
 // Render categories from API data
 function renderCategories(categories) {
   const categoriesGrid = document.querySelector(".categories-grid");
@@ -128,7 +130,7 @@ function renderCategories(categories) {
     const imageUrl =
       category.image && category.image.length > 0
         ? generateImageUrl(apiUrl, "categories", category.id, category.image[0])
-        : "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80";
+        :noImageUrl;
 
     const categoryCard = document.createElement("div");
     categoryCard.className = "category-card";
@@ -149,6 +151,8 @@ function renderCategories(categories) {
     categoriesGrid.appendChild(categoryCard);
   });
 }
+
+
 function flattenCategories(data) {
   const result = [];
 
@@ -164,6 +168,10 @@ function flattenCategories(data) {
   recurse(data);
   return result;
 }
+
+
+
+
 
 // Render Section from API data
 function renderSection(sectionData, sectionId, userWishListId) {

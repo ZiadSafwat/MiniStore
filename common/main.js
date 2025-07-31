@@ -1,9 +1,10 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const userId="8wkwi8rc8a8qbpi"
 const apiUrl = "https://codesquad.pockethost.io/api/";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJfcGJfdXNlcnNfYXV0aF8iLCJleHAiOjE3NTUwMTc1MjcsImlkIjoiOHdrd2k4cmM4YThxYnBpIiwidHlwZSI6ImF1dGhSZWNvcmQifQ.1811imz_CcHiXg9t8Iwa_HbVELwTIBHd6VQgAQlwe4o";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJfcGJfdXNlcnNfYXV0aF8iLCJleHAiOjE3NTUwMTc1MjcsImlkIjoiOHdrd2k4cmM4YThxYnBpIiwidHlwZSI6ImF1dGhSZWNvcmQifQ.1811imz_CcHiXg9t8Iwa_HbVELwTIBHd6VQgAQlwe4o";
 const noImageUrl='https://codesquad.pockethost.io/api/files/d307x3zqff91y9v/mmf3off8f3r9frx/box_2071537_640_iA7kzWD6ej.png?token=';
+
+
 // Save cart to localStorage
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
