@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FashionHub - Premium Online Shopping</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="homeStyles.css" />
+    
+    <!-- Load scripts in order: common first, then specific functionality -->
+    <script src="../common/main.js"></script>
+    <script src="homeScript.js"></script>
+    <script src="searchScript.js"></script>
+  </head>
+  <body>
+    <!-- Header with Enhanced Search -->
+    <header>
+      <div class="logo">
+        <i class="fas fa-store"></i>
+        <span>FashionHub</span>
+      </div>
+
+      <div class="search-container">
+        <form class="search-form" id="searchForm">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search for products, brands, categories..."
+          />
+          <button type="submit" class="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+
+      <nav>
+        <ul>
+           <li><a href="#Categories">Categories</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-icons">
+        <a href="" class="active"> <div class="icon-wrapper">
+          <i class="far fa-user"></i>
+        </div></a>
+        <a href="../user/userWishlist.html" class="active">  <div class="icon-wrapper">
+          <i class="far fa-heart"></i>
+        </div></a>
+        <a href="../cart/cart.html" class="active"> <div class="icon-wrapper cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </div></a>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Banner Section -->
+      <div class="banner-container">
+        <div
+          class="banner"
+          style="background-image: linear-gradient(rgba(0,0,0,0.6), url('https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'));"
+        >
+          <h2>Summer Sale - Up to 50% Off!</h2>
+          <p>
+            Discover amazing deals on electronics, fashion, and home essentials.
+            Limited time offer!
+          </p>
+          <button class="banner-btn">Shop Now</button>
+        </div>
+        <div class="banner-indicators">
+          <div class="indicator active"></div>
+          <div class="indicator"></div>
+          <div class="indicator"></div>
+        </div>
+      </div>
+
+      <!-- Search Results Section (Initially Hidden) -->
+      <div class="search-results" id="searchResults">
+        <div class="results-header">
+          <div class="results-count">
+            Search Results for "<span id="searchQuery">iphone13</span>"
+          </div>
+          <div class="filters">
+            <select class="filter-select" id="sortSelect">
+              <option value="relevance">Sort by Relevance</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+              <option value="newest">Newest Arrivals</option>
+            </select>
+            <select class="filter-select" id="categorySelect">
+              <option value="">All Categories</option>
+              <option value="electronics">Electronics</option>
+              <option value="clothing">Clothing</option>
+              <option value="home">Home & Kitchen</option>
+              <option value="beauty">Beauty</option>
+            </select>
+          </div>
+        </div>
+        <div class="products-grid" id="resultsGrid">
+          <!-- Search results will be displayed here -->
+        </div>
+      </div>
+
+      <!-- Categories Section -->
+      <h2 class="section-title" id="Categories">
+        Shop by Category
+        <!-- <a href="#" class="view-all">View All</a> -->
+      </h2>
+      <div class="categories-grid">
+        <!-- Categories will be loaded dynamically from API -->
+      </div>
+
+      <!-- New Arrivals Section -->
+      <h2 class="section-title">
+        New Arrivals
+        <!-- <a href="#" class="view-all">View All</a> -->
+      </h2>
+      <div class="products-grid" id="newArrivalsGrid">
+        <!-- New arrivals will be loaded dynamically from API -->
+      </div>
+      
+      <!-- Trending Products Section -->
+      <h2 class="section-title">
+        Trending Now
+        <!-- <a href="#" class="view-all">View All</a> -->
+      </h2>
+      <div class="products-grid trending-products" id="trendingProductsGrid" >
+        <!-- Trending products will be loaded dynamically from API -->
+      </div>
+
+
+            <!-- Recommendations Products Section -->
+            <h2 class="section-title">
+              Recommendations For You
+              <!-- <a href="#" class="view-all">View All</a> -->
+            </h2>
+            <div class="products-grid trending-products" id="recommendationsProductsGrid" >
+              <!-- Recommendations products will be loaded dynamically from API -->
+            </div>
+
+
+
+
+      <!-- Recent Searches Section -->
+      <div class="recent-searches">
+        <h3>Recent Searches</h3>
+        <div class="search-tags">
+          <div class="search-tag">iphone13</div>
+          <div class="search-tag">zy32767hsea7px7</div>
+          <div class="search-tag">dummy</div>
+          <div class="search-tag">electronics</div>
+          <div class="search-tag">watches</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 🛍️ MiniStore - Simple E-commerce Website</p>
+    </footer>
+  </body>
+</html>
+

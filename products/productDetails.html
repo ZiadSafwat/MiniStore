@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MiniStore - Product Details</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../common/commonStyles.css" />
+    <link rel="stylesheet" href="productDetail.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <i class="fas fa-shopping-bag"></i>
+        <span>MiniStore</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="../home/home.html">Products</a></li>
+          <li>
+            <a href="../cart/cart.html" class="active"
+              >Cart
+              <span class="cart-icon"
+                ><i class="fas fa-shopping-cart"></i
+                ><span class="cart-count">0</span></span
+              ></a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <h1 class="page-title">Product Details</h1>
+      <div id="product-detail-container">
+        <!-- Product details will be loaded here -->
+      </div>
+
+      <div class="reviews-section">
+        <h2 class="section-title">
+          Customer Reviews
+          <button class="add-review-btn" id="add-review-btn">
+            <i class="fas fa-plus"></i> Add Review
+          </button>
+        </h2>
+        <div id="reviews-container">
+          <!-- Reviews will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 🛍️ MiniStore - Simple E-commerce Website</p>
+    </footer>
+    <script src="../common/main.js"></script>
+    <script src="details.js"></script>
+  </body>
+</html>

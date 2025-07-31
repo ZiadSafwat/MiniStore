@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MiniStore - Cart</title>
+    <link rel="stylesheet" href="../common/commonStyles.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <i class="fas fa-shopping-bag"></i>
+        <span>MiniStore</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="../home/home.html">Products</a></li>
+          <li>
+            <a href="cart.html" class="active"
+              >Cart
+              <span class="cart-icon"
+                ><i class="fas fa-shopping-cart"></i
+                ><span class="cart-count">0</span></span
+              ></a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <h1 class="page-title">Your Shopping Cart</h1>
+      <div class="cart-container">
+        <div class="cart-header">
+          <div>Product</div>
+          <div>Price</div>
+          <div>Quantity</div>
+          <div>Total</div>
+        </div>
+        <div id="cart-items"></div>
+        <div class="cart-footer">
+          <div class="cart-total">
+            Total: $<span id="cart-total-price">0.00</span>
+          </div>
+          <button class="btn" id="checkout-btn">Proceed to Checkout</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 🛍️ MiniStore - Simple E-commerce Website</p>
+    </footer>
+
+    <script src="../common/main.js"></script>
+    <script src="cart.js"></script>
+  </body>
+</html>
