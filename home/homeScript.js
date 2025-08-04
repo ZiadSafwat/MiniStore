@@ -1,6 +1,4 @@
-// Home API integration functions
 
-// Fetch home data from API
 async function fetchHomeData() {
   const url = `${apiUrl}new/home`;
   const options = {
@@ -22,7 +20,6 @@ async function fetchHomeData() {
   }
 }
 
-// Render banners from API data
 function renderBanners(banners) {
   const bannerContainer = document.querySelector(".banner-container");
   if (
@@ -119,7 +116,6 @@ function renderBanners(banners) {
 
 
 
-// Render categories from API data
 function renderCategories(categories) {
   const categoriesGrid = document.querySelector(".categories-grid");
   if (!categoriesGrid || !categories) return;
@@ -251,6 +247,20 @@ function renderSection(sectionData, sectionId, userWishListId) {
       <button class="btn" onclick="window.location.href='../products/productDetails.html?id=${
         product.productId
       }'">Details</button>
+
+        
+           
+        
+      
+           
+      ${
+        (role==='admin')
+          ? ` <button class="btn" onclick="window.location.href='../admin/editProduct.html?id=${
+        product.productId
+      }'">edit Product</button>`
+          : ""
+      }
+         
     </div>
   </div>
 `;

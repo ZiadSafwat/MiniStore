@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style>
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+
+  <section class="vh-100 bg-light">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card shadow p-3 mb-5 bg-white rounded" style="border-radius: 15px;">
+              <div class="card-body p-5">
+                <h2 class="text-center mb-5">Sign In</h2>
+
+                <form id="loginForm">
+
+                  <div class="form-outline mb-4">
+                    <input type="email" id="email" class="form-control form-control-lg" required />
+                    <label class="form-label" for="email">Your Email</label>
+                    <div class="invalid-feedback" id="emailError">Please enter a valid email address</div>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="password" id="passwd" class="form-control form-control-lg" required minlength="6" />
+                    <label class="form-label" for="password">Password</label>
+                    <div class="invalid-feedback" id="passwordError">Password must be at least 6 characters</div>
+                  </div>
+
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg gradient-custom-4 text-body" id="loginBtn">Submit</button>
+                  </div>
+
+                  <p class="text-center text-muted mt-5 mb-0">Create New account? <a href="signUp.html"
+                      class="fw-bold text-body"><u>Sign Up here</u></a></p>
+                  <div class="alert alert-danger py-4 mt-3 d-none"></div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let loginBtn = document.getElementById("loginBtn");
+        let emailInput = document.getElementById('email');
+        let passwdInput = document.getElementById('passwd');
+        let loginForm = document.getElementById('loginForm');
+        let emailError = document.getElementById('emailError');
+        let passwordError = document.getElementById('passwordError');
+
+        // Validate email format
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            
+            // Email validation
+            if (!emailInput.value) {
+                emailInput.classList.add('is-invalid');
+                emailError.textContent = 'Email is required';
+                isValid = false;
+            } else if (!validateEmail(emailInput.value)) {
+                emailInput.classList.add('is-invalid');
+                emailError.textContent = 'Please enter a valid email address';
+                isValid = false;
+            } else {
+                emailInput.classList.remove('is-invalid');
+            }
+            
+            // Password validation
+            if (!passwdInput.value) {
+                passwdInput.classList.add('is-invalid');
+                passwordError.textContent = 'Password is required';
+                isValid = false;
+            } else if (passwdInput.value.length < 6) {
+                passwdInput.classList.add('is-invalid');
+                passwordError.textContent = 'Password must be at least 6 characters';
+                isValid = false;
+            } else {
+                passwdInput.classList.remove('is-invalid');
+            }
+            
+            return isValid;
+        }
+
+        async function login() {
+            if (!validateForm()) return;
+            
+            try {
+                let response = await fetch('https://codesquad.pockethost.io/api/collections/users/auth-with-password', {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'identity': emailInput.value,
+                        'password': passwdInput.value
+                    })
+                });
+                
+                let finalRespone = await response.json();
+                var alt = document.querySelector('.alert-danger');
+                
+                if (response.ok) {
+                    localStorage.setItem("token", finalRespone.token);
+                    localStorage.setItem("role", finalRespone.record.role);
+                    localStorage.setItem("userId", finalRespone.record.id);
+                    window.location.href = 'http://127.0.0.1:5501/home/home.html';
+                } else {
+                    alt.classList.replace('d-none','d-block');
+                    alt.innerHTML = finalRespone.message || 'Login failed. Please try again.';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                var alt = document.querySelector('.alert-danger');
+                alt.classList.replace('d-none','d-block');
+                alt.innerHTML = 'Network error. Please try again later.';
+            }
+        }
+
+        // Event listeners
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            login();
+        });
+
+        // Real-time validation
+        emailInput.addEventListener('input', function() {
+            if (this.value && !validateEmail(this.value)) {
+                this.classList.add('is-invalid');
+                emailError.textContent = 'Please enter a valid email address';
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+
+        passwdInput.addEventListener('input', function() {
+            if (this.value && this.value.length < 6) {
+                this.classList.add('is-invalid');
+                passwordError.textContent = 'Password must be at least 6 characters';
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+    </script>
+</body>
+</html>

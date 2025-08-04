@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style>
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+
+  <section class="vh-100 bg-light">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card shadow p-3 mb-5 bg-white rounded" style="border-radius: 15px;">
+              <div class="card-body p-5">
+                <h2 class="text-center mb-5">Create Account</h2>
+
+                <form id="registrationForm">
+
+                  <div class="form-outline mb-4">
+                    <input type="email" id="email" class="form-control form-control-lg" required />
+                    <label class="form-label" for="email">Your Email</label>
+                    <div class="invalid-feedback" id="emailError">Please enter a valid email address</div>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="password" id="password" class="form-control form-control-lg" required minlength="8" />
+                    <label class="form-label" for="password">Password</label>
+                    <div class="invalid-feedback" id="passwordError">Password must be at least 8 characters</div>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="password" id="repassword" class="form-control form-control-lg" required minlength="8" />
+                    <label class="form-label" for="repassword">Confirm Password</label>
+                    <div class="invalid-feedback" id="repasswordError">Passwords must match</div>
+                  </div>
+
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg gradient-custom-4 text-body" id="regBtn">Register</button>
+                  </div>
+
+                  <p class="text-center text-muted mt-5 mb-0">Already have an account? <a href="login.html"
+                      class="fw-bold text-body"><u>Login here</u></a></p>
+                  <div class="alert alert-danger py-4 mt-3 d-none" id="formError"></div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // DOM elements
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const repasswordInput = document.getElementById('repassword');
+        const regBtn = document.getElementById('regBtn');
+        const registrationForm = document.getElementById('registrationForm');
+        const formError = document.getElementById('formError');
+
+        // Validate email format
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        // Validate password strength
+        function validatePassword(password) {
+            // At least 8 chars, 1 uppercase, 1 lowercase, 1 number
+            const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            return re.test(password);
+        }
+
+        // Check if passwords match
+        function passwordsMatch() {
+            return passwordInput.value === repasswordInput.value;
+        }
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            formError.classList.add('d-none');
+            
+            // Email validation
+            if (!emailInput.value) {
+                emailInput.classList.add('is-invalid');
+                document.getElementById('emailError').textContent = 'Email is required';
+                isValid = false;
+            } else if (!validateEmail(emailInput.value)) {
+                emailInput.classList.add('is-invalid');
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                isValid = false;
+            } else {
+                emailInput.classList.remove('is-invalid');
+            }
+            
+            // Password validation
+            if (!passwordInput.value) {
+                passwordInput.classList.add('is-invalid');
+                document.getElementById('passwordError').textContent = 'Password is required';
+                isValid = false;
+            } else if (passwordInput.value.length < 8) {
+                passwordInput.classList.add('is-invalid');
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters';
+                isValid = false;
+            } else if (!validatePassword(passwordInput.value)) {
+                passwordInput.classList.add('is-invalid');
+                document.getElementById('passwordError').textContent = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+                isValid = false;
+            } else {
+                passwordInput.classList.remove('is-invalid');
+            }
+            
+            // Confirm password validation
+            if (!repasswordInput.value) {
+                repasswordInput.classList.add('is-invalid');
+                document.getElementById('repasswordError').textContent = 'Please confirm your password';
+                isValid = false;
+            } else if (!passwordsMatch()) {
+                repasswordInput.classList.add('is-invalid');
+                document.getElementById('repasswordError').textContent = 'Passwords do not match';
+                isValid = false;
+            } else {
+                repasswordInput.classList.remove('is-invalid');
+            }
+            
+            return isValid;
+        }
+
+        async function register() {
+            if (!validateForm()) return;
+            
+            try {
+                const response = await fetch('https://codesquad.pockethost.io/api/collections/users/records', {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'email': emailInput.value,
+                        'avatar': '',
+                        'role': 'user',
+                        'password': passwordInput.value,
+                        'passwordConfirm': repasswordInput.value
+                    })
+                });
+                
+                const finalResponse = await response.json();
+                
+                if (response.ok) {
+                    window.location.href = "login.html";
+                } else {
+                    formError.classList.replace('d-none','d-block');
+                    formError.innerHTML = finalResponse.message || 'Registration failed. Please try again.';
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                formError.classList.replace('d-none','d-block');
+                formError.innerHTML = 'Network error. Please try again later.';
+            }
+        }
+
+        // Event listeners
+        registrationForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            register();
+        });
+
+        // Real-time validation
+        emailInput.addEventListener('input', function() {
+            if (this.value && !validateEmail(this.value)) {
+                this.classList.add('is-invalid');
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+
+        passwordInput.addEventListener('input', function() {
+            if (this.value && this.value.length < 8) {
+                this.classList.add('is-invalid');
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters';
+            } else if (this.value && !validatePassword(this.value)) {
+                this.classList.add('is-invalid');
+                document.getElementById('passwordError').textContent = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+            } else {
+                this.classList.remove('is-invalid');
+                // Check if passwords match when password changes
+                if (repasswordInput.value && !passwordsMatch()) {
+                    repasswordInput.classList.add('is-invalid');
+                    document.getElementById('repasswordError').textContent = 'Passwords do not match';
+                } else {
+                    repasswordInput.classList.remove('is-invalid');
+                }
+            }
+        });
+
+        repasswordInput.addEventListener('input', function() {
+            if (this.value && !passwordsMatch()) {
+                this.classList.add('is-invalid');
+                document.getElementById('repasswordError').textContent = 'Passwords do not match';
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+    </script>
+</body>
+</html>

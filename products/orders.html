@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .order-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .order-items-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 0.5rem;
+        }
+
+        .order-items-list li {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-link {
+            color: #262b30;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .product-link:hover {
+            text-decoration: underline;
+        }
+
+        .shipping-details {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .status-delivered {
+            background-color: #4caf50;
+        }
+
+        .status-canceled {
+            background-color: #f44336;
+        }
+
+        .status-returned {
+            background-color: #ff9800;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .empty-cart i {
+            font-size: 3rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #262b30;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: #3a4249;
+        }
+         .tab-btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        background: #e0e0e0;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .tab-btn:hover {
+        background: #ccc;
+    }
+    .active-tab {
+        background: #262b30;
+        color: white;}
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <span>MiniStore</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../home/home.html">Products</a></li>
+                <li><a href="../cart/cart.html">Cart <span class="cart-icon"><i class="fas fa-shopping-cart"></i><span
+                                class="cart-count">0</span></span></a></li>
+            </ul>
+        </nav>
+    </header>
+<div class="status-tabs" style="display: flex; justify-content: center; gap: 1rem; margin: 1rem auto; flex-wrap: wrap;">
+    <button class="tab-btn" data-status="all">All</button>
+    <button class="tab-btn" data-status="delivered">Delivered</button>
+    <button class="tab-btn" data-status="canceled">Canceled</button>
+    <button class="tab-btn" data-status="returned">Returned</button>
+</div>
+    <div class="container">
+        <h1 class="page-title">Your Previous Orders</h1>
+        <div id="orders-container">
+            <div class="order-card">
+                <div class="order-card-header">
+                    <div>
+                        <h3>Order #1001</h3>
+                        <span>May 15, 2025, 2:30 PM</span>
+                    </div>
+                    <span class="order-status status-delivered">Delivered</span>
+                </div>
+                <div class="order-card-body">
+                    <div class="shipping-details">
+                        <h4>Shipping Information:</h4>
+                        <p><strong>Name:</strong> John Doe</p>
+                        <p><strong>Phone:</strong> (555) 123-4567</p>
+                        <p><strong>Address:</strong> 123 Main St, Apt 4B, New York, NY 10001</p>
+                    </div>
+                    <p><strong>Total Price:</strong> $89.97</p>
+                    <p><strong>Total Items:</strong> 3</p>
+                    <h4>Items:</h4>
+                    <ul class="order-items-list">
+                        <li>
+                            <a href="detail.html?id=1" class="product-link">Classic White T-Shirt</a>
+                            <p>Quantity: 2 | Price: $19.99</p>
+                        </li>
+                        <li>
+                            <a href="detail.html?id=2" class="product-link">Slim Fit Jeans</a>
+                            <p>Quantity: 1 | Price: $49.99</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="order-card">
+                <div class="order-card-header">
+                    <div>
+                        <h3>Order #1002</h3>
+                        <span>Apr 28, 2025, 10:15 AM</span>
+                    </div>
+                    <span class="order-status status-canceled">Canceled</span>
+                </div>
+                <div class="order-card-body">
+                    <div class="shipping-details">
+                        <h4>Shipping Information:</h4>
+                        <p><strong>Name:</strong> John Doe</p>
+                        <p><strong>Phone:</strong> (555) 123-4567</p>
+                        <p><strong>Address:</strong> 123 Main St, Apt 4B, New York, NY 10001</p>
+                    </div>
+                    <p><strong>Total Price:</strong> $129.95</p>
+                    <p><strong>Total Items:</strong> 2</p>
+                    <h4>Items:</h4>
+                    <ul class="order-items-list">
+                        <li>
+                            <a href="detail.html?id=3" class="product-link">Leather Jacket</a>
+                            <p>Quantity: 1 | Price: $99.99</p>
+                        </li>
+                        <li>
+                            <a href="detail.html?id=4" class="product-link">Cotton Socks (Pack of 3)</a>
+                            <p>Quantity: 1 | Price: $29.96</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="order-card">
+                <div class="order-card-header">
+                    <div>
+                        <h3>Order #1003</h3>
+                        <span>Mar 10, 2025, 4:45 PM</span>
+                    </div>
+                    <span class="order-status status-returned">Returned</span>
+                </div>
+                <div class="order-card-body">
+                    <div class="shipping-details">
+                        <h4>Shipping Information:</h4>
+                        <p><strong>Name:</strong> John Doe</p>
+                        <p><strong>Phone:</strong> (555) 123-4567</p>
+                        <p><strong>Address:</strong> 123 Main St, Apt 4B, New York, NY 10001</p>
+                    </div>
+                    <p><strong>Total Price:</strong> $59.98</p>
+                    <p><strong>Total Items:</strong> 2</p>
+                    <h4>Items:</h4>
+                    <ul class="order-items-list">
+                        <li>
+                            <a href="detail.html?id=5" class="product-link">Running Shoes</a>
+                            <p>Quantity: 1 | Price: $59.98</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 MiniStore - ITI course project</p>
+    </footer>
+    <script>
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const orders = document.querySelectorAll('.order-card');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const status = btn.dataset.status;
+            orders.forEach(order => {
+                const statusSpan = order.querySelector('.order-status');
+                const orderStatus = statusSpan?.textContent.toLowerCase() || '';
+                if (status === 'all' || orderStatus === status) {
+                    order.style.display = 'block';
+                } else {
+                    order.style.display = 'none';
+                }
+            });
+            tabButtons.forEach(b => b.classList.remove('active-tab'));
+            btn.classList.add('active-tab');
+        });
+    });
+</script>
+</body>
+
+</html>

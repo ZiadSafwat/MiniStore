@@ -1,23 +1,23 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-const userId="8wkwi8rc8a8qbpi"
+let cart =JSON.parse (localStorage.getItem("cart")) || [];
+const userId= (localStorage.getItem("userId")) ;
 const apiUrl = "https://codesquad.pockethost.io/api/";
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJfcGJfdXNlcnNfYXV0aF8iLCJleHAiOjE3NTUwMTc1MjcsImlkIjoiOHdrd2k4cmM4YThxYnBpIiwidHlwZSI6ImF1dGhSZWNvcmQifQ.1811imz_CcHiXg9t8Iwa_HbVELwTIBHd6VQgAQlwe4o";
+const token = (localStorage.getItem("token"))
+const role = (localStorage.getItem("role"))
 const noImageUrl='https://codesquad.pockethost.io/api/files/d307x3zqff91y9v/mmf3off8f3r9frx/box_2071537_640_iA7kzWD6ej.png?token=';
 
 
-// Save cart to localStorage
+
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// Update cart count indicator
+
 function updateCartCount() {
   const count = cart.reduce((total, item) => total + item.quantity, 0);
   const cartCountElements = document.querySelectorAll(".cart-count");
   cartCountElements.forEach((el) => (el.textContent = count));
 }
 
-// Add product to cart
 function addToCart(productId) {
   const existingItem = cart.find((item) => item.id === productId);
 
@@ -29,11 +29,14 @@ function addToCart(productId) {
       quantity: 1,
     });
   }
-
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('role');
+  localStorage.removeItem('userId');
+}
   saveCart();
   updateCartCount();
 
-  // Show feedback to user
   const notification = document.createElement("div");
   notification.textContent = "Product added to cart!";
   notification.style.position = "fixed";
@@ -54,7 +57,6 @@ function addToCart(productId) {
   }, 3000);
 }
 
-// Add CSS for notification animation
 const style = document.createElement("style");
 style.textContent = `
         @keyframes slideIn {
@@ -67,11 +69,9 @@ style.textContent = `
         }
     `;
 document.head.appendChild(style);
-// Generate image url
 function generateImageUrl(baseUrl, collectionName, recordId, fileName) {
   return `${baseUrl}files/${collectionName}/${recordId}/${fileName}`;
 }
-// Generate star rating HTML
 function generateRatingStars(rating) {
   const fullStars = Math.floor(rating);
   const halfStar = rating % 1 >= 0.5;
@@ -89,7 +89,6 @@ function generateRatingStars(rating) {
 
   return stars;
 }
-// impelement wishlistLogic
 async function wishlistFunctionality(
   wishListId,
   productId,
@@ -97,7 +96,6 @@ async function wishlistFunctionality(
   userId
 ) {
   const url = `${apiUrl}collections/wish_list_items/records/${wishListId}`;
-  // user already have record
   if (wishListId) {
     let appendOrRemove = addOrRemove ? "products+" : "products-";
     const options = {
@@ -118,7 +116,6 @@ async function wishlistFunctionality(
       console.error(error);
     }
   }
-  // if user dont have wishlist record in the wishlist
   else {
     if (addOrRemove) {
       const options = {
@@ -132,7 +129,8 @@ async function wishlistFunctionality(
       };
 
       try {
-        const response = await fetch(url, options);
+          const url2 = `${apiUrl}collections/wish_list_items/records`;
+        const response = await fetch(url2, options);
         const data = await response.json();
         console.log(data);
       } catch (error) {

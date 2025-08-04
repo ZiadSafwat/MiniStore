@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/../css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 bg-dark text-white min-vh-100 p-3">
+                <h5 class="mb-4">Dashboard</h5>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="fas fa-boxes me-2"></i> Products
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="fas fa-shopping-cart me-2"></i> Orders
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="fas fa-users me-2"></i> Customers
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10 p-4 bg-light">
+
+
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a class="text-dark text-decoration-none" href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a class="text-dark text-decoration-none" href="#">Products</a>
+                        </li>
+                        <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">
+                            Add Product
+                        </li>
+                    </ul>
+                </nav>
+
+                <h3 class="mb-4 pt-3">Add New Product</h3>
+
+                <form id="productForm">
+                    <div class="mb-3">
+                        <label for="productTitle" class="form-label">Product Title</label>
+                        <input type="text" name="title_en" class="form-control" id="title_en"
+                            placeholder="Enter product name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="productTitle" class="form-label">عنوان المنتج</label>
+                        <input type="text" name="title_ar" class="form-control" id="title_ar"
+                            placeholder="Enter product name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="productDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="description_en" rows="3"
+                            placeholder="Write a short description..." name="description_en"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productDescription" class="form-label">الوصف</label>
+                        <textarea class="form-control" id="description_ar" rows="3"
+                            placeholder="Write a short description..." name="description_ar"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="productPrice" class="form-label">Price</label>
+                        <input type="number" name="price" class="form-control" id="productPrice"
+                            placeholder="e.g. 99.99">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="productStock" class="form-label">Stock Quantity</label>
+                        <input type="number" name="stock" class="form-control" id="productStock" placeholder="e.g. 50">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="productCategory" class="form-label">Category</label>
+                        <select class="form-select" id="productCategory" name="category" required>
+                            <option selected disabled>Choose category</option>
+                            
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="productImage" class="form-label">Product Image</label>
+                        <input class="form-control" name="image" type="file" id="productImage" multiple accept="image/*">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i> Add Product
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/../js/bootstrap.bundle.min.js"></script>
+    <script src="product.js"></script>
+</body>
+
+</html>

@@ -39,7 +39,11 @@
       <nav>
         <ul>
            <li><a href="#Categories">Categories</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="../products/orders.html">orders</a></li>
+          <li><a href="../user/login.html" onclick="logout()">logout</a></li>
+                  
+          <li id="addProducts" ><a href="../admin/addProduct.html">add products</a></li>
+
         </ul>
       </nav>
 
@@ -163,6 +167,10 @@
     <footer>
       <p>&copy; 2025 🛍️ MiniStore - Simple E-commerce Website</p>
     </footer>
+    <script>
+      if(role!=='admin'){
+      document.getElementById('addProducts').innerHTML=''}
+    </script>
   </body>
 </html>
 

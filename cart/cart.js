@@ -1,9 +1,7 @@
-// DOM Elements
 const cartItemsContainer = document.getElementById('cart-items');
 const cartTotalPrice = document.getElementById('cart-total-price');
 const checkoutBtn = document.getElementById('checkout-btn');
 
-// Display cart items
 async function displayCartItems() {
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = `
@@ -21,7 +19,6 @@ async function displayCartItems() {
     cartItemsContainer.innerHTML = '';
     let total = 0;
     
-    // Fetch product details for each cart item
     for (const item of cart) {
         try {
             const url = `${apiUrl}new/search?q=${item.id}`;
@@ -79,7 +76,6 @@ async function displayCartItems() {
     cartTotalPrice.textContent = total.toFixed(2);
 }
 
-// Update product quantity in cart
 function updateQuantity(productId, newQuantity) {
     if (newQuantity < 1) {
         removeFromCart(productId);
@@ -95,7 +91,6 @@ function updateQuantity(productId, newQuantity) {
     }
 }
 
-// Remove product from cart
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
     saveCart();
@@ -103,11 +98,9 @@ function removeFromCart(productId) {
     displayCartItems();
 }
 
-// Initialize cart page
 document.addEventListener('DOMContentLoaded', () => {
     displayCartItems();
     
-    // Checkout button
     checkoutBtn.addEventListener('click', () => {
         alert('Thank you for your order! Total: $' + cartTotalPrice.textContent);
         cart = [];
